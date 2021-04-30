@@ -47,18 +47,6 @@ class App extends Component {
     this.state = initialState
   }
 
-  loadUser = data => {
-    this.setState({
-      user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined,
-      },
-    })
-  }
-
   calculateFaceLocation = data => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
     const image = document.getElementById("inputimage")
@@ -123,18 +111,18 @@ class App extends Component {
     return (
       <div className="App">
         <Particles className="particles" params={particlesOption} />
-        <Nav isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange} />
+        <Nav />
         {route === "home" ? (
           <div>
             <Logo />
-            <Rank name={this.state.user.name} entries={this.state.user.entries} />
+            <Rank />
             <ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit} />
             <FaceRecognition box={box} imgUrl={imgUrl} />
           </div>
         ) : route === "signin" ? (
           <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         ) : (
-          <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          <Register />
         )}
       </div>
     )
